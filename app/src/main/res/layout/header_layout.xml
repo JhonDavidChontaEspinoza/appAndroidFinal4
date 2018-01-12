@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lyPradeHeader"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:background="@drawable/encabezado"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/photoProfile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/myusuerfb" />
+
+    <TextView
+        android:id="@+id/nametextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:text="Jhon David"
+        android:textSize="20dp" />
+
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">appAndroidFinal</string>
+    <string name="not_LoginActivity">No se pudo iniciar sessión</string>
+    <string name="not_close_session">No se pudo Iniciar Sessión</string>
+    <string name="not_revoke_acces">No se puedo revokar el acceso</string>
+    <string name="log_out">Log Out</string>
+    <string name="revoke">Revoke</string>
+    <string name="facebook_app_id">1778981049072783</string>
+    <string name="not_firebase_auth">No se pudo Autenticar  con Firebase</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps__ubicacion_actual">Map</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
