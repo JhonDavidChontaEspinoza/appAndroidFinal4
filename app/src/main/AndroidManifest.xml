@@ -26,21 +26,24 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".LoginFActivity" >
+        <activity android:name=".LoginFActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>>
+        </activity>
+
         <activity android:name=".MenuActivity" />
         <activity android:name=".PfbActivity" />
         <activity android:name=".CocheMainActivity" />
         <activity android:name=".AgregarCocheActivity" />
-        <activity android:name=".AgregarUsuario"></activity>
+        <activity android:name=".AgregarUsuario">
+
+        </activity>
         <activity android:name=".ListaCocheActivity" />
         <activity android:name=".ListaUsuarioActivity" />
-        <!--
+        ><!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
              Note that the API key is linked to the encryption key used to sign the APK.

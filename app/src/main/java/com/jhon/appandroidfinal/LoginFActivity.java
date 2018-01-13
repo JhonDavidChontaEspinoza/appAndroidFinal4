@@ -1,10 +1,9 @@
 package com.jhon.appandroidfinal;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -36,64 +35,62 @@ import java.util.Arrays;
 public class LoginFActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
 
-   //Recursos de facebook
+    //Recursos de facebook
 
+    public static final int SIGN_IN_CODE = 777;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
-
     private FirebaseAuth firebaseAuthFacebook;
     private FirebaseAuth.AuthStateListener firebaseAuthListenerFacebook;
-
     //Recursos de GOOGLE
     private GoogleApiClient googleApiClient;
     private SignInButton signInButton;
-    public static final  int SIGN_IN_CODE=777;
-
     private FirebaseAuth firebaseAuthGoogle;
     private FirebaseAuth.AuthStateListener firebaseAuthListenerGoogle;
 
 
     private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_f);
         //Google
-        GoogleSignInOptions gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        googleApiClient=new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-        signInButton=(SignInButton) findViewById(R.id.signInButton);
+        signInButton = (SignInButton) findViewById(R.id.signInButton);
         signInButton.setSize(SignInButton.SIZE_WIDE);
         signInButton.setColorScheme(SignInButton.COLOR_DARK);
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                startActivityForResult(intent,SIGN_IN_CODE);
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                startActivityForResult(intent, SIGN_IN_CODE);
                 Auth.GoogleSignInApi.revokeAccess(googleApiClient);
             }
         });
 
-        firebaseAuthGoogle=FirebaseAuth.getInstance();
-        firebaseAuthListenerGoogle =new FirebaseAuth.AuthStateListener() {
+        firebaseAuthGoogle = FirebaseAuth.getInstance();
+        firebaseAuthListenerGoogle = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuthG) {
 
 
-                FirebaseUser userGoogle=firebaseAuthGoogle.getCurrentUser();
-                if(userGoogle!=null){
+                FirebaseUser userGoogle = firebaseAuthGoogle.getCurrentUser();
+                if (userGoogle != null) {
                     goMainScreenGoogle();
                 }
             }
         };
         //facebook
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.loginButtoon);
@@ -108,23 +105,23 @@ public class LoginFActivity extends AppCompatActivity implements GoogleApiClient
 
             @Override
             public void onCancel() {
-                Toast.makeText(getApplicationContext(),"Operación Cancelada",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Operación Cancelada", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getApplicationContext(),"Ocurrió un Error no previsto",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Ocurrió un Error no previsto", Toast.LENGTH_SHORT).show();
             }
         });
 
-        firebaseAuthFacebook =FirebaseAuth.getInstance();
-        firebaseAuthListenerFacebook=new FirebaseAuth.AuthStateListener() {
+        firebaseAuthFacebook = FirebaseAuth.getInstance();
+        firebaseAuthListenerFacebook = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuthF) {
 
 
-                FirebaseUser userFacebook=firebaseAuthFacebook.getCurrentUser();
-                if(userFacebook!=null){
+                FirebaseUser userFacebook = firebaseAuthFacebook.getCurrentUser();
+                if (userFacebook != null) {
 
 
                     goMainScreenFacebook();
@@ -140,12 +137,12 @@ public class LoginFActivity extends AppCompatActivity implements GoogleApiClient
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
 
-        AuthCredential credential= FacebookAuthProvider.getCredential(accessToken.getToken());
+        AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
         firebaseAuthFacebook.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(!task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"Error al Iniciar Sessióm xD",Toast.LENGTH_SHORT).show();
+                if (!task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Error al Iniciar Sessióm xD", Toast.LENGTH_SHORT).show();
                 }
                 progressBar.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
@@ -154,14 +151,14 @@ public class LoginFActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     private void goMainScreenFacebook() {
-        Intent intentFB=new Intent(this,MenuActivity.class);
-        intentFB.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intentFB = new Intent(this, MenuActivity.class);
+        intentFB.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intentFB);
     }
 
     private void goMainScreenGoogle() {
-        Intent intentG=new Intent(this,MenuActivity.class);
-        intentG.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intentG = new Intent(this, MenuActivity.class);
+        intentG.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intentG);
     }
 
@@ -172,6 +169,7 @@ public class LoginFActivity extends AppCompatActivity implements GoogleApiClient
         firebaseAuthFacebook.addAuthStateListener(firebaseAuthListenerFacebook);
         firebaseAuthGoogle.addAuthStateListener(firebaseAuthListenerGoogle);
     }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
@@ -179,34 +177,34 @@ public class LoginFActivity extends AppCompatActivity implements GoogleApiClient
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
-        if (requestCode==SIGN_IN_CODE){
-            GoogleSignInResult resultGoogle=Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SIGN_IN_CODE) {
+            GoogleSignInResult resultGoogle = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResultGoogle(resultGoogle);
         }
 
     }
 
     private void handleSignInResultGoogle(GoogleSignInResult resultGoogle) {
-        if(resultGoogle.isSuccess()){
+        if (resultGoogle.isSuccess()) {
             firebaseAuthWithGoogle(resultGoogle.getSignInAccount());
-        }else
-        {
-            Toast.makeText(this, R.string.not_LoginActivity,Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.not_LoginActivity, Toast.LENGTH_LONG).show();
         }
     }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount signInAccount) {
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
 
-        AuthCredential credential= GoogleAuthProvider.getCredential(signInAccount.getIdToken(),null);
+        AuthCredential credential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(), null);
         firebaseAuthGoogle.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-                if(!task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), R.string.not_firebase_auth,Toast.LENGTH_SHORT).show();
+                if (!task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), R.string.not_firebase_auth, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -215,11 +213,11 @@ public class LoginFActivity extends AppCompatActivity implements GoogleApiClient
     @Override
     protected void onStop() {
         super.onStop();
-        if(firebaseAuthFacebook!=null){
+        if (firebaseAuthFacebook != null) {
             firebaseAuthFacebook.removeAuthStateListener(firebaseAuthListenerFacebook);
         }
 
-        if(firebaseAuthListenerGoogle!=null){
+        if (firebaseAuthListenerGoogle != null) {
             firebaseAuthGoogle.removeAuthStateListener(firebaseAuthListenerGoogle);
         }
     }

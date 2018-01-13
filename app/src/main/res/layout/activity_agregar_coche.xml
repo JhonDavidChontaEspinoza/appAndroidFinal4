@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,32 +16,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Marca"/>
+            android:hint="Marca"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/txtDueno"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Dueno" />
+            android:hint="Dueno"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/txtPuertas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Puertas" />
+            android:hint="Puertas"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/txtRuedas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Ruedas" />
+            android:hint="Ruedas"
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/btnAgregarC"

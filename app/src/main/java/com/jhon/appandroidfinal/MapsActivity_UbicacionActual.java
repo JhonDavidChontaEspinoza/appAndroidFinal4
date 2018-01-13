@@ -5,9 +5,9 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,10 +21,31 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity_UbicacionActual extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
-    private Marker marcador;
     double lat = 0.0;
     double log = 0.0;
+    LocationListener locListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+    };
+    private GoogleMap mMap;
+    private Marker marcador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +57,6 @@ public class MapsActivity_UbicacionActual extends FragmentActivity implements On
         mapFragment.getMapAsync(this);
 
     }
-
 
     /**
      * Manipulates the map once available.
@@ -59,7 +79,6 @@ public class MapsActivity_UbicacionActual extends FragmentActivity implements On
         miUbicacion();
     }
 
-
     private void agregarMarcador(double lat, double log) {
         LatLng coordenadas = new LatLng(lat, log);
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 16);
@@ -78,36 +97,13 @@ public class MapsActivity_UbicacionActual extends FragmentActivity implements On
         }
     }
 
-    LocationListener locListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
-
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-
-        }
-    };
-
-    private void miUbicacion()
-    {
+    private void miUbicacion() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         actualizarUbicacion(location);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15000, 0, locListener);
     }
 }

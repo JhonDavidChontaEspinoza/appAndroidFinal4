@@ -30,14 +30,15 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30px"
             android:layout_marginTop="400px" />
+
         <com.facebook.login.widget.LoginButton
             android:id="@+id/loginButtoon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="50px"
-            android:layout_marginHorizontal="30px"
             android:layout_marginBottom="475dp"
+            android:layout_marginHorizontal="30px"
+            android:layout_marginTop="50px"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent" />

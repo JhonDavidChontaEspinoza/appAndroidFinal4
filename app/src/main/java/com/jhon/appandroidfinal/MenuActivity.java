@@ -5,20 +5,18 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v4.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
@@ -30,10 +28,10 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+import com.jhon.appandroidfinal.Fragments.ObtenerAutosFragment;
 import com.jhon.appandroidfinal.Fragments.UbicacionFragment;
 
-public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.OnConnectionFailedListener{
+public class MenuActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     Toolbar toolbar;
     NavigationView navigationView;
@@ -58,48 +56,47 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
         navigationView = (NavigationView) findViewById(R.id.menu);
         View header = navigationView.getHeaderView(0);
         nombreFBTextView = (TextView) header.findViewById(R.id.nametextView);
-        photoFB=(ImageView)header.findViewById(R.id.photoProfile);
-        phoImageView2=(ImageView)header.findViewById(R.id.photoProfile);
-        nameTextView=(TextView)header.findViewById(R.id.nametextView);
+        photoFB = (ImageView) header.findViewById(R.id.photoProfile);
+        phoImageView2 = (ImageView) header.findViewById(R.id.photoProfile);
+        nameTextView = (TextView) header.findViewById(R.id.nametextView);
 
         //google
-        GoogleSignInOptions gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
 
-        googleApiClient =new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        firebaseAuth=FirebaseAuth.getInstance();
-        firebaseAuthListener =new FirebaseAuth.AuthStateListener() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user=firebaseAuth.getCurrentUser();
-                if(user!=null){
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
                     setUserData(user);
-                }else
-                {
+                } else {
                     goLogInScreenGoogle();
                 }
             }
         };
 
-        FirebaseUser userFacebook= FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser userFacebook = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(userFacebook!=null){
-            String name=userFacebook.getDisplayName();
+        if (userFacebook != null) {
+            String name = userFacebook.getDisplayName();
             //String email=userFacebook.getEmail();
-           Uri photoUrl=userFacebook.getPhotoUrl();
+            Uri photoUrl = userFacebook.getPhotoUrl();
             //String uid=userFacebook.getUid();
 
-           nombreFBTextView.setText(name); //IT SEEMS THAT HERE FAIL
+            nombreFBTextView.setText(name); //IT SEEMS THAT HERE FAIL
             //emailFBTextView.setText(email);
-           // uidFBTextView.setText(uid);
+            // uidFBTextView.setText(uid);
 
-          Glide.with(this)
+            Glide.with(this)
                     .load(userFacebook.getPhotoUrl())
                     .crossFade()
                     .placeholder(R.drawable.myusuerfb)
@@ -107,8 +104,7 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
                     .into(photoFB);
 
 
-        }else
-        {
+        } else {
             goLoginScreenFacebook();
         }
 
@@ -126,12 +122,9 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        if (item.isChecked())
-                        {
+                        if (item.isChecked()) {
                             item.setChecked(false);
-                        }
-                        else
-                        {
+                        } else {
                             item.setChecked(true);
 
                         }
@@ -142,7 +135,7 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
 
                         drawerLayout.closeDrawers();
 
-                        switch (item.getItemId()){
+                        switch (item.getItemId()) {
                             case R.id.MiUbicacion:
                                 UbicacionFragment ubicacionFragment = new UbicacionFragment();
                                 transaction.replace(R.id.fragment, ubicacionFragment);
@@ -150,10 +143,9 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
                                 //setFragment(0);
                                 break;
                             case R.id.BuscarUbicacion:
-                                /*//setFragment(1);
-                                ListarFragment listar = new ListarFragment();
-                                transaction.replace(R.id.fragment, listar);
-                                transaction.commit();*/
+                                ObtenerAutosFragment obtenerAutosFragment = new ObtenerAutosFragment();
+                                transaction.replace(R.id.fragment, obtenerAutosFragment);
+                                transaction.commit();
                                 break;
                             case R.id.BuscarParadero:
                                 /*ImagenesFragment ordenar = new ImagenesFragment();
@@ -167,12 +159,11 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
                                 Auth.GoogleSignInApi.revokeAccess(googleApiClient).setResultCallback(new ResultCallback<Status>() {
                                     @Override
                                     public void onResult(@NonNull Status status) {
-                                        if(status.isSuccess()){
+                                        if (status.isSuccess()) {
                                             goLogInScreenGoogle();
 
-                                        }else
-                                        {
-                                            Toast.makeText(getApplicationContext(),"No se pudo WTHA",Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "No se pudo WTHA", Toast.LENGTH_LONG).show();
                                         }
                                     }
                                 });
@@ -195,7 +186,7 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
                 drawerLayout,
                 toolbar,
                 R.string.open,
-                R.string.close){
+                R.string.close) {
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -212,8 +203,8 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
     }
 
     private void goLoginScreenFacebook() {
-        Intent intent=new Intent(this,LoginFActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(this, LoginFActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
@@ -230,8 +221,8 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
     }
 
     private void goLogInScreenGoogle() {
-        Intent intent=new Intent(this,LoginFActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(this, LoginFActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
     }
@@ -241,27 +232,25 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
-                if(status.isSuccess()){
+                if (status.isSuccess()) {
                     goLogInScreenGoogle();
-                }else
-                {
-                    Toast.makeText(getApplicationContext(), R.string.not_close_session,Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.not_close_session, Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
-    public  void revoke(final View view){
+    public void revoke(final View view) {
         firebaseAuth.signOut();
         Auth.GoogleSignInApi.revokeAccess(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
-                if(status.isSuccess()){
+                if (status.isSuccess()) {
                     goLogInScreenGoogle();
 
-                }else
-                {
-                    Toast.makeText(getApplicationContext(),"No se pudo WTHA",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No se pudo WTHA", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -275,7 +264,7 @@ public class MenuActivity extends AppCompatActivity  implements GoogleApiClient.
     @Override
     protected void onStop() {
         super.onStop();
-        if(firebaseAuthListener!=null){
+        if (firebaseAuthListener != null) {
             firebaseAuth.removeAuthStateListener(firebaseAuthListener);
         }
     }

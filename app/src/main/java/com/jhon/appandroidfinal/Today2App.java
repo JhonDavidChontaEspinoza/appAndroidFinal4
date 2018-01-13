@@ -9,7 +9,7 @@ import com.facebook.appevents.AppEventsLogger;
  * Created by DS on 25/12/2017.
  */
 
-public class Today2App extends Application{
+public class Today2App extends Application {
 
     @Override
     public void onCreate() {

@@ -5,7 +5,7 @@ package com.jhon.appandroidfinal.Model;
  */
 
 public class FirebaseReferences {
-    final public static String BBM_REFERENCES="BBM";
-    final public static String COCHE_REFERENCES="coche";
-    final public static String USUARIO_REFERENCES="usuario";
+    final public static String BBM_REFERENCES = "BBM";
+    final public static String COCHE_REFERENCES = "coche";
+    final public static String USUARIO_REFERENCES = "usuario";
 }

@@ -2,32 +2,22 @@ package com.jhon.appandroidfinal;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class MainFActivity extends AppCompatActivity  {
+public class MainFActivity extends AppCompatActivity {
 
     //facebook
-    private TextView nombreFBTextView,emailFBTextView,uidFBTextView;
+    private TextView nombreFBTextView, emailFBTextView, uidFBTextView;
     private ImageView photoFB;
     //Google
    /* private ImageView phoImageView2;
@@ -76,20 +66,20 @@ public class MainFActivity extends AppCompatActivity  {
             }
         };*/
         //Facebook
-        nombreFBTextView=(TextView)findViewById(R.id.nombreFBTextView);
-        emailFBTextView=(TextView)findViewById(R.id.emailFBTextView);
+        nombreFBTextView = (TextView) findViewById(R.id.nombreFBTextView);
+        emailFBTextView = (TextView) findViewById(R.id.emailFBTextView);
 
-        uidFBTextView=(TextView)findViewById(R.id.uidFBtextView);
+        uidFBTextView = (TextView) findViewById(R.id.uidFBtextView);
 
-        photoFB=(ImageView)findViewById(R.id.photoFB);
+        photoFB = (ImageView) findViewById(R.id.photoFB);
 
-        FirebaseUser userFacebook=FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser userFacebook = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(userFacebook!=null){
-            String name=userFacebook.getDisplayName();
-            String email=userFacebook.getEmail();
-            Uri photoUrl=userFacebook.getPhotoUrl();
-            String uid=userFacebook.getUid();
+        if (userFacebook != null) {
+            String name = userFacebook.getDisplayName();
+            String email = userFacebook.getEmail();
+            Uri photoUrl = userFacebook.getPhotoUrl();
+            String uid = userFacebook.getUid();
 
             nombreFBTextView.setText(name);
             emailFBTextView.setText(email);
@@ -103,12 +93,12 @@ public class MainFActivity extends AppCompatActivity  {
                     .into(photoFB);
 
 
-        }else
-        {
+        } else {
             goLoginScreenFacebook();
         }
 
     }
+
     /*private void setUserData(FirebaseUser user) {
         nameGTextView.setText(user.getDisplayName());
         emailGTextView.setText(user.getEmail());
@@ -130,8 +120,8 @@ public class MainFActivity extends AppCompatActivity  {
 
     }*/
     private void goLoginScreenFacebook() {
-        Intent intent=new Intent(this,LoginFActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(this, LoginFActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
    /* public void logOut(View view) {
